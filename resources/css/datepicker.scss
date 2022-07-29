@@ -1,0 +1,20 @@
+@import url('@chenfengyuan/datepicker/dist/datepicker.css');
+@import './variable.scss';
+
+.datepicker{
+    .selected {
+        &.range-start {
+            background-image: linear-gradient(to bottom, $primary, $primary) !important;
+        }
+    }
+    table{
+        tr{
+            td{
+                padding: 5px !important;
+                &.active{
+                    background-image: linear-gradient(to bottom, $primary, $primary) !important;
+                }
+            }
+        }
+    }
+}

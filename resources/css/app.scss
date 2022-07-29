@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Nokora&display=swap');
+@import './variable.scss';
+* {
+    font-family: 'Nokora';
+}
+
+.hover-pointer {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.text-decoration-underline {
+    text-decoration: underline;
+}
+
+.c-sorting{
+    display: flex;
+    justify-content: space-between;
+    @extend .hover-pointer;
+}
+
+.z-index-1{
+    z-index: 1000;
+}
+
+.pagination{
+    button,span{
+        &.page-link{
+            border: none;
+        }
+    }
+}
+.datepicker-container{
+    .picked{
+        background-color: $primary;
+        color: white !important;
+        &:hover{
+            background-color: $primary;
+        }
+    }
+}
+
+.gap-10{
+    gap: 10px;
+}
+
+.record-selected{
+    background-color: #f2f0fd !important;
+}

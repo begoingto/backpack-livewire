@@ -1,0 +1,5 @@
+models:
+    Article: { title: string, body: 'text nullable', feature_image: 'string nullable', category_id: 'biginteger unsigned', user_id: 'biginteger unsigned' }
+    Category: { name: string, status: 'boolean default:1', parent_id: 'integer nullable', depth: 'integer nullable', lft: 'integer nullable', rgt: 'integer nullable' }
+    Tag: { name: string, status: 'boolean default:1' }
+    User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string:100 nullable' }

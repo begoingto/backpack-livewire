@@ -1,0 +1,141 @@
+models:
+  Farmer:
+    name: string
+    email: string nullable index
+    gender: enum:m,f default:m
+    dob: date
+    age: integer
+    phone: string
+    key_farmer: string
+    avatar: string
+    present: boolean default:false
+    relationships:
+      morphOne: Address
+      hasMany: Demo
+      belongsToMany: Training
+  Project:
+    name: string:100
+    start_at: datetime
+    expired_at: datetime
+    relationships:
+      belongsToMany: User
+      morphOne: Address
+      hasMany: Demo
+  Demo:
+    name: string
+    sowing: datetime
+    transplant_at: datetime
+    est_harvest_day: datetime
+    est_field_day: datetime
+    ph_test: double:8,2
+    land_type: enum:owned,rented default:owned
+    spacing: enum:plant_to_plant,row_to_row default:ptp
+    plant_num: integer
+    status: enum:ongoing,completed,terminated default:ongoing
+    area: double:8,2
+    unit_type_id: id foreign
+    project_id: id foreign
+    farmer_id: id foreign
+    relationships:
+      belongsToMany: Variety, SubjectMaster, Variety
+      morphOne: Address
+      hasMany: SubActiveCost,SubActiveReturn
+  Training:
+    type: enum:practical,theoritical,mixed
+    training_date: datetime
+    cost_of_training: decimal:15,2
+    training_length: enum:more_than_2days,full_day,half_day,up_to_2day
+    demo_id: id foreign
+    relationships:
+      morphOne: Address
+      belongsToMany: SubjectMaster, Farmer         
+  Crop:
+    name: string
+    relationships:
+      hasMany: Variety
+  Variety:
+    crop_id: id foreign
+    name: string
+    relationships:
+      belongsToMany: Demo, Country, Farmer
+  SubjectMaster:
+    name: string
+    relationships:
+      belongsToMany: Training,Country
+  Address:
+    current_location: string
+    country_id: id foreign 
+    state_id: id foreign
+    district_id: id foreign
+    village_id: id foreign
+    village_tracts_id: id foreign
+    zip_code: string:15
+    lang: string
+    long: string 
+    relationships:
+      morphTo: Addressable
+  Country:
+    name: string
+    short_name: string:10 
+    currency_code: string:10
+    currency_symbol: string:60
+    relationships:
+      belongsToMany: SubjectMaster, UnitType
+      hasMany: Address, State, Variety
+  State:
+    country_id: id foreign
+    name: string
+    relationships:
+      hasMany: District
+  District:
+    state_id: id foreign
+    name: string
+    relationships:
+      hasMany: VillageTract
+  VillageTract:
+    district_id: id foreign
+    name: string
+    relationships:
+      hasMany: Village
+  Village:
+    village_tracts_id: id foreign
+    name: string
+  Activity:
+    name: string
+    relationships:
+      hasMany: SubActive
+  SubActive:
+    name: string
+    activity_id: id foreign
+    relationships:
+      belongsToMany: Country
+      hasMany: SubActiveCost
+  SubActiveCost:
+    active_at: datetime
+    qty: double:8,2
+    cost: decimal:15,2
+    cash_source: enum:farmer,ewsf,partner,loan
+    material_type: string
+    remarks: text nullable
+    demo_id: id foreign
+    sub_act_id: id foreign	
+    unit_type_id: id foreign
+ActivityReturn:
+  name: string
+  relationships:
+    hasMany: SubActiveReturn
+SubActiveReturn:
+  active_at: datetime
+  qty: double:8,2
+  price: decimal:15,2
+  amount: decimal:15,2
+  remarks: text nullable
+  demo_id: id foreign
+  activitey_return_id: id foreign
+  unit_type_id: id foreign
+UnitType:
+  name: string
+  type: enum:wieght,length,orther
+  base_conversion_id: id foreign
+  relationships:
+    belongsToMany: Country
