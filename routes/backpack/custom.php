@@ -23,6 +23,8 @@ Route::group([
 
     Route::group(['prefix' => 'custom', 'as' => 'custom.'], function () {
         Route::get('category', [CustomController::class, 'category'])->name('category');
+        Route::get('google/map', [CustomController::class, 'map'])->name('map');
+        Route::get('/loan', [CustomController::class, 'loan'])->name('loan');
     });
     Route::get('/file', function () {
         return view('custom.file-manage');
