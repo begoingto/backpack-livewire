@@ -1,8 +1,5 @@
 @extends(backpack_view('blank'))
 @section('content')
-    <pre>
-        {{$data}}
-    </pre>
     <div class="card">
         <div class="card-header">Google Map</div>
         <div class="card-body" id="my_map">
@@ -21,6 +18,8 @@
         }
     </style>
     <script>
+        const data = <?php echo $data; ?>;
+        console.log(data);
         // Initialize and add the map
         function initMap() {
             // The location of bikay
@@ -30,7 +29,7 @@
             };
             // The map, centered at bikay
             const map = new google.maps.Map(document.getElementById("my_map"), {
-                zoom: 7,
+                zoom: 15,
                 center: bikay,
             });
             // The marker, positioned at bikay

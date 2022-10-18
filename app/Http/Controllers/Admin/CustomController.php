@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 use Location\Polyline;
 use Location\Coordinate;
 use App\Http\Controllers\Controller;
-use Location\Formatter\Coordinate\GeoJSON;
 use Location\Formatter\Polyline\GeoJSON as PolylineGeoJSON;
 
 class CustomController extends Controller
@@ -23,7 +22,7 @@ class CustomController extends Controller
         $polyline->addPoint(new Coordinate(11.568327834436177, 104.89475295947739));
         $polyline->addPoint($bk);
         $formatter = new PolylineGeoJSON;
-        $data = $bk->format(new GeoJSON);
+        $data = $formatter->format($polyline);
         return view('custom.map', compact('data'));
     }
 
