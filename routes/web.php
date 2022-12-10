@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\AwsFileUpload;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,4 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return to_route('backpack');
 });
+Route::get('aws-file-upload', AwsFileUpload::class)->name('aws-file-upload');

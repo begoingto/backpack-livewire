@@ -1,4 +1,4 @@
-<div>
+<div {{ $attributes }}>
     @livewireStyles
     {{$slot}}
     @livewireScripts
