@@ -13,5 +13,7 @@
 
 
 @section('content')
-
+<div class=" w-100 vh-75 d-flex justify-content-center align-items-center">
+    <h1>File upload</h1>
+</div>
 @endsection
