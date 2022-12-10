@@ -10,6 +10,7 @@
     </ul>
 </li>
 <li class='nav-item'><a class='nav-link' href='{{ route('custom.category') }}'><i class='nav-icon la la-table'></i>Custom Categories</a></li>
+<li class='nav-item'><a class='nav-link' href='{{ route('category-csv-upload.csv-upload') }}'><i class='nav-icon la la-table'></i>Upload Categories</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ route('aws-file-upload') }}'><i class='nav-icon la la-table'></i>AWS File Upload</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ route('custom.map') }}'><i class='nav-icon la la-table'></i>Google Maps</a></li>
 <li class='nav-item'><a class='nav-link' href='{{ route('custom.loan') }}'><i class='nav-icon la la-table'></i>Loan</a></li>

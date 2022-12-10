@@ -20,6 +20,7 @@ Route::group([
 ], function () {
     // custom admin routes
     Route::crud('category', 'CategoryCrudController');
+    Route::crud('category-csv-upload', 'CategoryCsvUploadCrudController');
 
     Route::group(['prefix' => 'custom', 'as' => 'custom.'], function () {
         Route::get('category', [CustomController::class, 'category'])->name('category');
