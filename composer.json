@@ -24,6 +24,7 @@
         "mjaschen/phpgeo": "^4.2",
         "psr/simple-cache": "^2.0",
         "spatie/laravel-cookie-consent": "^3.2",
+        "spatie/laravel-medialibrary": "^10.0.0",
         "unisharp/laravel-filemanager": "^2.5"
     },
     "require-dev": {
