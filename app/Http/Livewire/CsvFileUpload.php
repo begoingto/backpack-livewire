@@ -2,7 +2,9 @@
 namespace App\Http\Livewire;
 
 use App\Helpers\ChunkIterator;
+use App\Jobs\ImportCsv;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Bus;
 use League\Csv\Reader;
 use League\Csv\Statement;
 use Livewire\Component;
@@ -16,6 +18,7 @@ class CsvFileUpload extends Component
     public $file;
     public string $model = Customer::class;
     public $fileHeaders;
+    public int $fileRowsCount=0;
     public array $columnsToMap = ['id', 'first_name', 'last_name', 'email'];
     public array $requiredColumns = ['id', 'first_name', 'last_name', 'email'];
     public array $columnslabel = ['id' => 'ID', 'first_name' => 'First Name', 'last_name' => 'Last Name', 'email' => 'Email'];
@@ -58,10 +61,13 @@ class CsvFileUpload extends Component
     {
         //validation
         $this->validateOnly('file');
-
+        $csv = $this->readCsv;
         // read csv
-        $this->fileHeaders = $this->readCsv->getHeader();
-        // grab data from csv
+        $this->fileHeaders = $csv->getHeader();
+
+        $this->fileRowsCount = count($this->csvRecords);
+
+        $this->resetValidation();
     }
 
     public function getReadCsvProperty(): Reader
@@ -82,22 +88,22 @@ class CsvFileUpload extends Component
     public function import()
     {
         $this->validate();
+        // create import
+        $import = $this->createImport();
 
         // chunk record
+        $batches = collect((new ChunkIterator($this->csvRecords->getRecords(), 10))->get())
+                    ->map(function($chunk) use($import){
+                        return new ImportCsv($import,Customer::class,$chunk,$this->columnsToMap);
+                    })->toArray();
 
-        $chunks = (new ChunkIterator($this->csvRecords->getRecords(), 10))->get();
 
-        $items = [];
+        Bus::batch($batches)
+            ->finally(function()use($import){
+                $import->touch('completed_at');
+            })
+            ->dispatch();
 
-        foreach ($chunks as $chunk) {
-            $items[] = $chunk;
-        }
-
-        dd($items);
-
-        // create import
-        $this->createImport();
-        dd('import');
     }
 
     protected function createImport()

@@ -1,33 +1,6 @@
 <div class="row">
     <div class="col-md-6">
-        <div class="card">
-            <div class="card-body d-flex">
-                <h1 class="text-primary">
-                    <i class="la la-cloud-upload la-lg mt-4"></i>
-                </h1>
-                <div class="ml-3 w-100">
-                    <p>Category_template.csv</p>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                            style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body d-flex">
-                <h1 class="text-primary">
-                    <i class="la la-cloud-upload la-lg mt-4"></i>
-                </h1>
-                <div class="ml-3 w-100">
-                    <p>Category_template.csv</p>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                            style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <livewire:csv-import-processing  />
     </div>
     <div class="col-md-6">
         <div class="card card-import">
@@ -40,11 +13,11 @@
                     x-on:dragover.prevent="dropping=true" x-on:dragleave.prevent="dropping=false"
                     x-on:drop="dropping=false" x-on:drop.prevent="handleDrop($event)" x-data="{
                         dropping: false,
-                    
+
                         handleDrop(event) {
                             @this.upload('file', event.dataTransfer.files[0])
                         }
-                    
+
                     }">
                     <h1><i class="la la-cloud-upload la-lg mt-4"></i></h1>
                     <h3>Drag and Drop</h3>
@@ -64,7 +37,7 @@
                                     {{ $columnslabel[$column] ?? $column }}<sup class="text-danger">*</sup>
                                 </label>
                                 <div class="col-sm-8">
-                                    <select wire:model="columnsToMap.{{ $column }}" name="{{ $column }}"
+                                    <select wire:model.defer="columnsToMap.{{ $column }}" name="{{ $column }}"
                                         id="{{ $column }}" @class([
                                             'custom-select',
                                             'is-invalid' => $errors->has('columnsToMap.' . $column),
@@ -83,7 +56,7 @@
                     @endif
                 </div>
                 <hr>
-                <button type="submit" class="btn btn-primary float-right"><i class="la la-cloud-upload la-lg"></i>
+                <button type="submit" class="btn btn-primary float-right" @disabled($fileRowsCount===0)><i class="la la-cloud-upload la-lg"></i>
                     Import</button>
             </form>
         </div>
